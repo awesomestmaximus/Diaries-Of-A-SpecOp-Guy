@@ -1,0 +1,2 @@
+respawnOnStart = 0;
+#include "core\def\param.hpp"
