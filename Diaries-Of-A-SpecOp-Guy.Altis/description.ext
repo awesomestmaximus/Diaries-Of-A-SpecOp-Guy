@@ -1,2 +1,3 @@
 respawnOnStart = 0;
 #include "core\def\param.hpp"
+#include "core\fnc\task\tasktypes.hpp"
