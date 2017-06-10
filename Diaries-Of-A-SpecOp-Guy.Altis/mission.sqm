@@ -8,14 +8,14 @@ class EditorData
 	toggles=1;
 	class ItemIDProvider
 	{
-		nextID=75;
+		nextID=77;
 	};
 	class Camera
 	{
 		pos[]={20789.646,53.133934,7231.124};
 		dir[]={0,-0.70710677,0.70710683};
 		up[]={0,0.70710677,0.70710671};
-		aside[]={0.99999994,0,0};
+		aside[]={0.99999994,0,-0};
 	};
 };
 binarizationWanted=0;
@@ -3838,10 +3838,9 @@ class Mission
 					flags=6;
 					class Attributes
 					{
-						rank="SERGEANT";
+						rank="CAPTAIN";
 						init="call{this setVariable [""commander"", true];}";
 						name="east_commander";
-						description="Squad Leader";
 						isPlayable=1;
 					};
 					id=58;
