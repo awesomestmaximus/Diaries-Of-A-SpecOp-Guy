@@ -1,15 +1,15 @@
-params ["_sideType", "_sidePlayer"];
+params ["_missionType", "_requestingFaction"];
 
 if (isServer) exitWith {
-	["Task_" + str(_sideType) + "_" + str(_sidePlayer), "SUCCEEDED", false] spawn BIS_fnc_taskSetState;
-	//if (_sideType isEqualTo 1) then {[2] call btc_fnc_task_create};
+	["Task_" + str(_missionType) + "_" + str(_requestingFaction), "SUCCEEDED", false] spawn BIS_fnc_taskSetState;
+	//if (_missionType isEqualTo 1) then {[2] call btc_fnc_task_create};
 };
 
 private ["_description", "_spacer"];
 
 _spacer = "                              ";
 
-switch _sideType do
+switch _missionType do
 {
 	case 0 : {
 		_description = ["Misison accomplished!","The Enemy has been finally defeated!" + _spacer + "Misison accomplished!"];
@@ -27,8 +27,8 @@ switch _sideType do
 [
 	"task" + "SUCCEEDED" + "Icon",
 	[
-		[["Task_" + str(_sideType) + "_" + str(_sidePlayer)] call BIS_fnc_taskType] call bis_fnc_taskTypeIcon,
+		[["Task_" + str(_missionType) + "_" + str(_requestingFaction)] call BIS_fnc_taskType] call bis_fnc_taskTypeIcon,
 		_description select 1
 	]
 ] call bis_fnc_showNotification;
-["Task_" + str(_sideType) + "_" + str(_sidePlayer)] call BIS_fnc_deleteTask;
+["Task_" + str(_missionType) + "_" + str(_requestingFaction)] call BIS_fnc_deleteTask;

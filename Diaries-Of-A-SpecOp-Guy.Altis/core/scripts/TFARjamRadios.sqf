@@ -47,12 +47,12 @@ while {alive _jammer} do
     _interference = 1;
 
     if (_dist < _rad) then {
-		_interference = _strength - (_distPercent * _strength) + 1;         
+		_interference = _strength - (_distPercent * _strength) + 1;
     };
     // Set the TF receiving and transmitting distance multipliers
     player setVariable ["tf_receivingDistanceMultiplicator", _interference];
 	player setVariable ["tf_transmittingDistanceMultiplicator", _interference];
-	
+
     // Debug chat and marker.
 	if (_debug) then {
 		deletemarker "CIS_DebugMarker";
@@ -61,27 +61,27 @@ while {alive _jammer} do
 		_debugMarker = createmarker ["CIS_DebugMarker", position _jammer];
 		_debugMarker setMarkerShape "ELLIPSE";
 		_debugMarker setMarkerSize [_rad, _rad];
-		
+
 		//Position Marker
 		_debugMarker2 = createmarker ["CIS_DebugMarker2", position _jammer];
 		_debugMarker2 setMarkerShape "ICON";
 		_debugMarker2 setMarkerType "mil_dot";
 		_debugMarker2 setMarkerText format ["%1", _jammer];
-		
+
 		systemChat format ["Distance: %1, Percent: %2, Interference: %3", _dist,  100 * _distPercent, _interference];
 		systemChat format ["Active Jammer: %1, Jammers: %2",_jammer, _jammers];
 		//copyToClipboard (str(Format ["Distance: %1, Percent: %2, Interference: %3", _dist,  100 * _distPercent, _interference]));
 	};
     // Sleep 5 seconds before running again
-    sleep 5.0;
-	
+    sleep 1.0;
+
 	//Only run this if there are multiple jammers.
 	if (count _jammers > 1) then {
 		//Check if all of the jammers are still alive. If not, remove it from _jammers.
 		{
 			if (!alive _x AND count _jammers > 1) then {_jammers = _jammers - [_x]};
 		} foreach _jammers;
-	
+
 		//Check for closest jammer
 		_jammer = call _jammerDist;
 	};

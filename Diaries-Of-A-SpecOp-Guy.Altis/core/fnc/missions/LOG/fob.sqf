@@ -15,68 +15,60 @@
         b. Add map marker on position "Lost FOB Equipment"
 
 */
-params ["_side", "_log_spawn_point", "_destination"];
-private ["_fob_vehicle", "_destinationText", "_area", "_marker"];
-
+params ["_requestingFaction", "_logSpawnPoint", "_selectedDestination"];
+private ["_utilityVehicle", "_destinationText", "_areaMarker", "_flagMarker", "_missionType"];
+_missionType = 2;
 // Define FOB Vehicle based on side     ================== [3]
 // SPAWN VEHICLE
 // Initialise variables
-if (_side == east) then {
-        _fob_vehicle = "rhs_gaz66_ammo_vdv" createVehicle _log_spawn_point;
+if (_requestingFaction == east) then {
+        _utilityVehicle = "rhs_gaz66_ammo_vdv" createVehicle _logSpawnPoint;
 } else {
-        _fob_vehicle = "rhsusf_M977A4_REPAIR_usarmy_d" createVehicle _log_spawn_point;
+        _utilityVehicle = "rhsusf_M977A4_REPAIR_usarmy_d" createVehicle _logSpawnPoint;
 };
-call compile format ["AM5_aborted_%1_%2 = false;", 2, _side];
-call compile format ["AM5_done_%1_%2 = false;", 2, _side];
-call compile format ["AM5_failed_%1_%2 = false;", 2, _side];
+call compile format ["AM5_aborted_%1_%2 = false;", _missionType, _requestingFaction];
+call compile format ["AM5_done_%1_%2 = false;", _missionType, _requestingFaction];
+call compile format ["AM5_failed_%1_%2 = false;", _missionType, _requestingFaction];
 
 // Create Task                          ================== [4]
-_destinationText = [_destination] call AM5_fnc_common_getGridCoords;
-[_side, 2, _fob_vehicle, _destinationText] call btc_fnc_task_create;
+_destinationText = [_selectedDestination] call AM5_fnc_common_getGridCoords;
+[_requestingFaction, _missionType, _utilityVehicle, _destinationText] call btc_fnc_task_create;
 sleep 1;
-call compile format["AM5_assigned_%1_%2 = true; publicVariable 'AM5_assigned_%1_%2';", 2, _side];
+call compile format["AM5_assigned_%1_%2 = true; publicVariable 'AM5_assigned_%1_%2';", _missionType, _requestingFaction];
 
 // Draw Markers
-_area = createmarker [format ["sm_%1",_destination],_destination];
-_area setMarkerShape "ELLIPSE";
-_area setMarkerBrush "SolidBorder";
-_area setMarkerSize [250, 250];
-_area setMarkerAlpha 0.3;
-_area setmarkercolor "colorBlue";
-_marker = createmarker [format ["sm_2_%1",_destination],_destination];
-_marker setmarkertype "hd_flag";
-_marker setmarkertext "FOB Deploy Location";
-_marker setMarkerSize [0.6, 0.6];
+_areaMarker = [_selectedDestination, 250] call AM5_fnc_common_drawArea;
+_flagMarker = [_selectedDestination, "FOB Deploy Location"] call AM5_fnc_commmon_drawFlag;
 
 // Add Deploy Action To Vehicle
-[_fob_vehicle, _side, _log_spawn_point, getMarkerPos _marker] remoteExec ["AM5_fnc_int_addActionFOBVehicle", 0, false]; //must be -2 for target on dedicated
+[_utilityVehicle, _requestingFaction, _logSpawnPoint, getMarkerPos _flagMarker, _missionType] remoteExec ["AM5_fnc_int_addActionVehicle", 0, false]; //must be -2 for target on dedicated
 
 // MISSION OUTCOME
 waitUntil {
         sleep 5;
         (
-                call compile format["AM5_aborted_%1_%2", 2, _side] ||
-                call compile format["AM5_failed_%1_%2", 2, _side] ||
-                call compile format["AM5_done_%1_%2", 2, _side] ||
-                !(alive _fob_vehicle)
+                call compile format["AM5_aborted_%1_%2", _missionType, _requestingFaction] ||
+                call compile format["AM5_failed_%1_%2", _missionType, _requestingFaction] ||
+                call compile format["AM5_done_%1_%2", _missionType, _requestingFaction] ||
+                !(alive _utilityVehicle)
         )
 };
 
-{deleteMarker _x} forEach [_area, _marker];
+{deleteMarker _x} forEach [_areaMarker, _flagMarker];
 
-if (call compile format["AM5_done_%1_%2", 2, _side]) exitWith {
+if (call compile format["AM5_done_%1_%2", _missionType, _requestingFaction]) exitWith {
         {
                 cutText ["Deploying FOB stay clear of the area", "PLAIN DOWN"];
-        } forEach [(playableUnits) select {side _x == _side}];
+        } forEach [(playableUnits) select {side _x == _requestingFaction}];
         sleep 1;
-        [2, _side] call btc_fnc_task_set_done;
+        [_missionType, _requestingFaction] call btc_fnc_task_set_done;
         sleep 1;
-        deleteVehicle _fob_vehicle;
-        ["fob", _side, getPos _fob_vehicle, getDir _fob_vehicle] call AM5_comp_spawn;
-	call compile format["AM5_assigned_%1_%2 = false; publicVariable 'AM5_assigned_%1_%2';", 2, _side];
+        deleteVehicle _utilityVehicle;
+        [_missionType, _requestingFaction, getPos _utilityVehicle, getDir _utilityVehicle] call AM5_comp_spawn;
+	call compile format["AM5_assigned_%1_%2 = false; publicVariable 'AM5_assigned_%1_%2';", _missionType, _requestingFaction];
 };
 
-call compile format["AM5_assigned_%1_%2 = false; publicVariable 'AM5_assigned_%1_%2';", 2, _side];
-[2, _side] call btc_fnc_task_fail;
+call compile format["AM5_assigned_%1_%2 = false; publicVariable 'AM5_assigned_%1_%2';", _missionType, _requestingFaction];
+[_missionType, _requestingFaction] call btc_fnc_task_fail;
 sleep 1;
-deleteVehicle _fob_vehicle;
+deleteVehicle _utilityVehicle;

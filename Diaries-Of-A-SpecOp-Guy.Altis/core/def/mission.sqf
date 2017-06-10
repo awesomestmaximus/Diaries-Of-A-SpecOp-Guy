@@ -28,6 +28,6 @@ variables
         call compile format ["AM5_failed_%1_%2 = false;", _x, west];
 } forEach [0, 1, 2, 3];
 
-jamRadius = 5000;
+jamRadius = paramsArray select 3;
 jamStr = 100;
-jamDEBUG = true;
+jamDEBUG = false;

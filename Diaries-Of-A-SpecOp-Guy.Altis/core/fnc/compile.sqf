@@ -1,6 +1,6 @@
 /////////////////// SERVER \\\\\\\\\\\\\\\\\\\
 if (isServer) then {
-        // MISSIONS
+        // MISSIONS PLAYBOOKS
         AM5_fnc_mission_LOG_FOB = compileFinal preprocessFileLineNumbers "core\fnc\missions\LOG\fob.sqf";
         AM5_fnc_mission_PvP_JAM = compileFinal preprocessFileLineNumbers "core\fnc\missions\PvP\JAM.sqf";
 
@@ -14,7 +14,7 @@ if (isServer) then {
         AM5_fnc_EH_FOB_hit = compile preprocessFileLineNumbers "core\fnc\eh\FOB_hit.sqf";
 
         // INTERACTIONS
-        AM5_fnc_int_test = compileFinal preprocessFileLineNumbers "core\fnc\int\test.sqf";
+        //AM5_fnc_int_test = compileFinal preprocessFileLineNumbers "core\fnc\int\test.sqf";
 };
 
 /////////////////// CLIENT AND SERVER \\\\\\\\\\\\\\\\\\\
@@ -28,6 +28,8 @@ AM5_fnc_missions_abort = compile preprocessFileLineNumbers "core\fnc\missions\ab
 // COMMON
 AM5_fnc_common_getGridCoords = compileFinal preprocessFileLineNumbers "core\fnc\common\getGRIDCoords.sqf";
 AM5_fnc_common_selectFlatLocation = compileFinal preprocessFileLineNumbers "core\fnc\common\selectFlatLandLocation.sqf";
+AM5_fnc_common_drawArea = compileFinal preprocessFileLineNumbers "core\fnc\common\drawArea.sqf";
+AM5_fnc_common_drawFlag = compileFinal preprocessFileLineNumbers "core\fnc\common\drawFlag.sqf";
 
 // INTERACTIONS
 AM5_fnc_int_addActionFOBVehicle = compileFinal preprocessFileLineNumbers "core\fnc\int\addActionFOBVehicle.sqf";

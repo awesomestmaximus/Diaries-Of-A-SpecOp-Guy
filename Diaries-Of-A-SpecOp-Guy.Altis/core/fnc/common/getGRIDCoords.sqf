@@ -1,5 +1,5 @@
 params ["_pos"];
-private ["_grid", "_xc", "_yc", "_xo", "_yo", "_calcMEM"];
+private ["_grid", "_xi", "_yi", "_xo", "_yo", "_calcMEM"];
 
 _xi = _pos select 0;
 _yi = _pos select 1;

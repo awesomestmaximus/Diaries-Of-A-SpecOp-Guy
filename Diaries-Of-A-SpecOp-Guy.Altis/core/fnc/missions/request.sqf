@@ -1,36 +1,35 @@
-params ["_missionType", "_side"];
+params ["_missionType", "_requestingFaction"];
+private ["_selectedDestination", "_logSpawnPoint"];
 
 switch (_missionType) do {
         case (2): {
-                private ["_destination", "_log_spawn_point"];
-                if (_side == east) then {_log_spawn_point = getPos east_log_point;} else {_log_spawn_point = getPos west_log_point;};
-                _destination = [] call AM5_fnc_common_selectFlatLocation;
-                if (_destination isEqualTo [] || _destination isEqualTo "") exitWith {
-                        _destination = [];
-                        _log_spawn_point = "";
+                if (_requestingFaction == east) then {_logSpawnPoint = getPos east_log_point;} else {_logSpawnPoint = getPos west_log_point;};
+                _selectedDestination = [] call AM5_fnc_common_selectFlatLocation;
+                if (_selectedDestination isEqualTo [] || _selectedDestination isEqualTo "") exitWith {
+                        _selectedDestination = [];
+                        _logSpawnPoint = "";
                 };
-                if ((_destination distance _log_spawn_point) < 1250) exitWith {
+                if ((_selectedDestination distance _logSpawnPoint) < 1250) exitWith {
                         cutText ["FOB cannot be within a kilometer radius of Base", "PLAIN DOWN"];
-                        _destination = [];
-                        _log_spawn_point = "";
+                        _selectedDestination = [];
+                        _logSpawnPoint = "";
                 };
-                hint format ["Deploy FOB in GRID %1", [_destination] call AM5_fnc_common_getGridCoords];
-                [_side, _log_spawn_point, _destination] remoteExec ["AM5_fnc_mission_LOG_FOB", 2, false];
+                hint format ["Deploy FOB in GRID %1", [_selectedDestination] call AM5_fnc_common_getGridCoords];
+                [_requestingFaction, _logSpawnPoint, _selectedDestination] remoteExec ["AM5_fnc_mission_LOG_FOB", 2, false];
         };
         case (3): {
-                private ["_destination", "_log_spawn_point"];
-                if (_side == east) then {_log_spawn_point = getPos east_log_point;} else {_log_spawn_point = getPos west_log_point;};
-                _destination = [] call AM5_fnc_common_selectFlatLocation;
-                if (_destination isEqualTo [] || _destination isEqualTo "") exitWith {
-                        _destination = [];
-                        _log_spawn_point = "";
+                if (_requestingFaction == east) then {_logSpawnPoint = getPos east_log_point;} else {_logSpawnPoint = getPos west_log_point;};
+                _selectedDestination = [] call AM5_fnc_common_selectFlatLocation;
+                if (_selectedDestination isEqualTo [] || _selectedDestination isEqualTo "") exitWith {
+                        _selectedDestination = [];
+                        _logSpawnPoint = "";
                 };
-                if ((_destination distance _log_spawn_point) < 1250) exitWith {
+                if ((_selectedDestination distance _logSpawnPoint) < 1250) exitWith {
                         cutText ["FOB cannot be within a kilometer radius of Base", "PLAIN DOWN"];
-                        _destination = [];
-                        _log_spawn_point = "";
+                        _selectedDestination = [];
+                        _logSpawnPoint = "";
                 };
-                hint format ["Deploy FOB in GRID %1", [_destination] call AM5_fnc_common_getGridCoords];
-                [_side, _log_spawn_point, _destination] remoteExec ["AM5_fnc_mission_PvP_JAM", 2, false];
+                hint format ["Deploy FOB in GRID %1", [_selectedDestination] call AM5_fnc_common_getGridCoords];
+                [_requestingFaction, _logSpawnPoint, _selectedDestination] remoteExec ["AM5_fnc_mission_PvP_JAM", 2, false];
         };
 };

@@ -1,13 +1,13 @@
-params ["_sideType", "_sidePlayer"];
+params ["_missionType", "_requestingFaction"];
 
 if (isServer) exitWith {
-        ["Task_" + str(_sideType) + "_" + str(_sidePlayer), "FAILED", false] spawn BIS_fnc_taskSetState;
-        ["Task_" + str(_sideType) + "_" + str(_sidePlayer)] call BIS_fnc_deleteTask;
+        ["Task_" + str(_missionType) + "_" + str(_requestingFaction), "FAILED", false] spawn BIS_fnc_taskSetState;
+        ["Task_" + str(_missionType) + "_" + str(_requestingFaction)] call BIS_fnc_deleteTask;
 };
 
 private ["_description"];
 
-switch (_sideType) do
+switch (_missionType) do
 {
 	case 2 :
 	{
@@ -21,8 +21,8 @@ switch (_sideType) do
 [
         "task" + "FAILED" + "Icon",
         [
-                [["Task_" + str(_sideType) + "_" + str(_sidePlayer)] call BIS_fnc_taskType] call bis_fnc_taskTypeIcon,
+                [["Task_" + str(_missionType) + "_" + str(_requestingFaction)] call BIS_fnc_taskType] call bis_fnc_taskTypeIcon,
                  _description select 1
         ]
 ] call bis_fnc_showNotification;
-["Task_" + str(_sideType) + "_" + str(_sidePlayer)] call BIS_fnc_deleteTask;
+["Task_" + str(_missionType) + "_" + str(_requestingFaction)] call BIS_fnc_deleteTask;
