@@ -2,11 +2,13 @@
 if (isServer) then {
         // MISSIONS
         AM5_fnc_mission_LOG_FOB = compileFinal preprocessFileLineNumbers "core\fnc\missions\LOG\fob.sqf";
+        AM5_fnc_mission_PvP_JAM = compileFinal preprocessFileLineNumbers "core\fnc\missions\PvP\JAM.sqf";
 
         // COMPOSITIONS
         AM5_comp_spawn = compile preprocessFileLineNumbers "core\comp\spawn.sqf";
         AM5_comp_fob = compile preprocessFileLineNumbers "core\comp\FOB.sqf";
         am5_comp_flag_arsenal = compile preprocessFileLineNumbers "core\comp\flag_arsenal.sqf";
+        AM5_comp_jam = compile preprocessFileLineNumbers "core\comp\Radio.sqf";
 
         // EH
         AM5_fnc_EH_FOB_hit = compile preprocessFileLineNumbers "core\fnc\eh\FOB_hit.sqf";
@@ -29,6 +31,7 @@ AM5_fnc_common_selectFlatLocation = compileFinal preprocessFileLineNumbers "core
 
 // INTERACTIONS
 AM5_fnc_int_addActionFOBVehicle = compileFinal preprocessFileLineNumbers "core\fnc\int\addActionFOBVehicle.sqf";
+AM5_fnc_int_addActionVehicle = compileFinal preprocessFileLineNumbers "core\fnc\int\addActionVehicle.sqf";
 
 /////////////////// CLIENT \\\\\\\\\\\\\\\\\\\
 if (!isDedicated) then {

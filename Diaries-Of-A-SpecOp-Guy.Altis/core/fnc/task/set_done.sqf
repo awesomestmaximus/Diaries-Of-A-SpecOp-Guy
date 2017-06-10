@@ -20,6 +20,9 @@ switch _sideType do
 	case 2 : {
 		_description = ["Side Misison accomplished!","FOB has been deployed!" + _spacer + "New Spawn Point Available!"];
 	};
+	case 3 : {
+		_description = ["Side Misison accomplished!","JAM has been deployed!" + _spacer + "Enemy Communications Disrupted!"];
+	};
 };
 [
 	"task" + "SUCCEEDED" + "Icon",

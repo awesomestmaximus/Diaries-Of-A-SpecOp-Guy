@@ -32,6 +32,11 @@ switch (_sideType) do
 		_description = [format["Deploy the FOB at GRID %1", _destinationText],"Deploy FOB","Deploy FOB"];
 		_type = "move";
 	};
+	case 3 :
+	{
+		_description = [format["Deploy the JAMMER at GRID %1", _destinationText],"Deploy JAMMER","Deploy JAMMER"];
+		_type = "repair";
+	};
 };
 
 [
