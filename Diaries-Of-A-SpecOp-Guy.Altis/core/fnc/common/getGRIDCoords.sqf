@@ -14,5 +14,5 @@ _calcMEM = floor (_yi / 100);
 if (_calcMEM < 10) then { _yo = "00" + str(_calcMEM);};
 if (_calcMEM < 100) then { _yo = "0" + str(_calcMEM);} else { _yo = str(_calcMEM);};
 
-_grid = _xo + " " + _yo;
+_grid = _xo + _yo;
 _grid;
